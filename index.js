@@ -83,7 +83,7 @@ var generateTree = function(param){
 
   });
 
-
+  var excludedExtension = ['.png', '.jpg', '.git', '.jpeg', '.gif', '.html'];
   var tree = function(root){
       
       var info, ring;
@@ -105,7 +105,7 @@ var generateTree = function(param){
           
           var filtered = children.filter(function(c){
               
-              return c != '.DS_Store' && path.extname(c) != ".html"
+              return c != '.DS_Store' && excludedExtension.indexOf(path.extname(c)) == -1
 
           })
 

@@ -25,15 +25,15 @@
   },
   "dependencies": {
     "event-stream": "*",
-    "through2": "~0.4.0"
+    "through2": "~0.4.0",
+    "js-yaml": "~3.0.1",
+    "marked": "~0.3.1",
+    "path": "~0.4.9"
   },
   "devDependencies": {
     "gulp-util": "~2.2.0",
     "gulp": "~3.3.2",
-    "assert": "~1.1.0",
-    "js-yaml": "~3.0.1",
-    "marked": "~0.3.1",
-    "path": "~0.4.9"
+    "assert": "~1.1.0"    
   },
   "engines": {
     "node": ">=0.8.0",

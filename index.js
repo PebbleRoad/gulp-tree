@@ -22,14 +22,22 @@ var generateTree = function(param){
 
       /* File passed in */
       
-      var parseFile = tree(patternsPath),
-          json = JSON.stringify(parseFile),
-          jsonParsed = JSON.parse(json)
+      var parsedFile = tree(patternsPath)
 
 
       //var treeobject = eval("(" + parseFile + ")")
-      var s = jsonParsed.children.filter(function(a, b){
+      var s = parsedFile.children.filter(function(a, b){
         return a.children
+      })
+
+      /**
+       * If patternsPath doesnt exist
+       */
+      
+      fs.stat(patternsPath, function(err, stats){
+        if(err && erro.errno == 34){
+          this.emit('error', new PluginError('gulp-tree', 'Patterns directory doesnt exist'));
+        }
       })
 
 
@@ -140,11 +148,9 @@ var generateTree = function(param){
           parsedContent.markdown = lines.join('\n');
           parsedContent.content = parsedContent.markdown;
 
-          if(parsedContent.meta) info.hidecode = parsedContent.meta.hidecode
-
-          if(parsedContent.meta){
-              //info.description = marked(parsedContent.meta.description) 
-          }
+          if(parsedContent.meta && Object.keys(parsedContent.meta).length > 1){
+              info.meta = parsedContent.meta
+          }          
           
           if(parsedContent.meta){
               info.name = parsedContent.meta.name 

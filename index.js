@@ -148,9 +148,19 @@ var generateTree = function(param){
           parsedContent.markdown = lines.join('\n');
           parsedContent.content = parsedContent.markdown;
 
-          if(parsedContent.meta && Object.keys(parsedContent.meta).length > 1){
-              info.meta = parsedContent.meta
-          }          
+          info.meta = {};
+          
+          for(var key in parsedContent.meta){
+            if(key != "name" && key != "description"){
+              if(parsedContent.meta.hasOwnProperty(key)){
+                info.meta[key] = parsedContent.meta[key]  
+              }              
+            }
+          }
+
+          if(Object.keys(info.meta).length < 1){
+            delete(info.meta)
+          }
           
           if(parsedContent.meta){
               info.name = parsedContent.meta.name 

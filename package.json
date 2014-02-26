@@ -1,6 +1,6 @@
 {
   "name": "gulp-tree",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A gulp plugin to create tree JSON from directory. Used for tapestry app",
   "keywords": [
     "gulpplugin",

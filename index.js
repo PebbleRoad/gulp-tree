@@ -49,7 +49,7 @@ var generateTree = function(param){
 
         if(err && err.errno == 34){
 
-          fs.mkdir(jsonPath, 755)
+          fs.mkdir(jsonPath)
 
         }
       })

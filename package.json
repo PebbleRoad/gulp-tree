@@ -1,0 +1,45 @@
+{
+  "name": "gulp-tree",
+  "version": "0.0.1",
+  "description": "A gulp plugin to create tree JSON from directory. Used for tapestry app",
+  "keywords": [
+    "gulpplugin",
+    "livereload"
+  ],
+  "homepage": "https://github.com/PebbleRoad/gulp-tree",
+  "bugs": {
+    "url": "https://github.com/PebbleRoad/gulp-tree/issues"
+  },
+  "author": {
+    "name": "Vinay M",
+    "email": "vinay@pebbleroad.com",
+    "url": "https://github.com/PebbleRoad"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PebbleRoad/gulp-tree.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "event-stream": "*",
+    "through2": "~0.4.0"
+  },
+  "devDependencies": {
+    "gulp-util": "~2.2.0",
+    "gulp": "~3.3.2",
+    "assert": "~1.1.0",
+    "js-yaml": "~3.0.1",
+    "marked": "~0.3.1",
+    "path": "~0.4.9"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "licenses": "MIT",
+  "readme": "# gulp-tree \n Create a tree JSON from directory. Used for tapestry app",
+  "readmeFilename": "README.md"  
+}

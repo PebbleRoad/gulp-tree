@@ -46,14 +46,19 @@ var generateTree = function(param){
         }
       })
 
-      for(var i = 0; i< s.length; i++){
+      var files = [];
 
+      for(var i = 0; i< s.length; i++){
+          
           if(s[i].children && s[i].children.length){
+              
+              files.push(jsonPath+ '/' + s[i].name + '.json')
 
               fs.writeFile(jsonPath + '/'+ s[i].name+".json", JSON.stringify(s[i].children, null, 4), function(err){
                   if(err) {
                       console.log(err);
                   } else {
+                                          
                       console.log("Generated json in " + jsonPath);
                   }
               })  
@@ -61,6 +66,8 @@ var generateTree = function(param){
           
 
       }
+
+      return files;
 
       
       

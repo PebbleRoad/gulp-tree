@@ -1,10 +1,10 @@
-# gulp-embedlr [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
+# gulp-tree
 
-> Plugin for embedding a livereload snippet in html files for [gulp](https://github.com/wearefractal/gulp)
+> Tree creates a structured hierarchical JSON from a folder structure
 
 ## Usage
 
-First, install `gulp-embedlr` as a development dependency:
+First, install `gulp-tree` as a development dependency:
 
 ```shell
 npm install --save-dev gulp-tree

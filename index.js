@@ -132,41 +132,43 @@ var generateTree = function(param){
                   };
 
           var lines = contents.split('\n');   
-          
-          var frontMatter = '';
 
-          if (lines[0].trim() === '---' || lines[0].trim() == "") {
-              var firstFrontMatterMarker = lines.shift();
-              var line = '';
-              while (line !== '---') {
-                  frontMatter = frontMatter + line + "\n"; // since we split by \n we'll add it back here and stay true to the source doc
-                  line = lines.shift();
+          if(lines.length > 1){
+          
+              var frontMatter = '';
+
+              if (lines[0].trim() === '---' || lines[0].trim() == "") {
+                  var firstFrontMatterMarker = lines.shift();
+                  var line = '';
+                  while (line !== '---') {
+                      frontMatter = frontMatter + line + "\n"; // since we split by \n we'll add it back here and stay true to the source doc
+                      line = lines.shift();
+                  }
               }
-          }
-          parsedContent.yaml = frontMatter;
-          parsedContent.meta = yaml.load(frontMatter);
-          
-          parsedContent.markdown = lines.join('\n');
-          parsedContent.content = parsedContent.markdown;
+              parsedContent.yaml = frontMatter;
+              parsedContent.meta = yaml.load(frontMatter);
+              
+              parsedContent.markdown = lines.join('\n');
+              parsedContent.content = parsedContent.markdown;
 
-          info.meta = {};
-          
-          for(var key in parsedContent.meta){
-            if(key != "name" && key != "description"){
-              if(parsedContent.meta.hasOwnProperty(key)){
-                info.meta[key] = parsedContent.meta[key]  
-              }              
+              info.meta = {};
+              
+              for(var key in parsedContent.meta){
+                if(key != "name" && key != "description"){
+                  if(parsedContent.meta.hasOwnProperty(key)){
+                    info.meta[key] = parsedContent.meta[key]  
+                  }              
+                }
+              }
+
+              if(Object.keys(info.meta).length < 1){
+                delete(info.meta)
+              }
+              
+              if(parsedContent.meta){
+                  info.name = parsedContent.meta.name 
+              }
             }
-          }
-
-          if(Object.keys(info.meta).length < 1){
-            delete(info.meta)
-          }
-          
-          if(parsedContent.meta){
-              info.name = parsedContent.meta.name 
-          }
-          
           
       } else if (ring.isSymbolicLink()) {
           info.type = 'link';

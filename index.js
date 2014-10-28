@@ -94,7 +94,7 @@ var generateTree = function(param){
           return 'error: root does not exist';
       }
       info = {
-          path: root.replace(process.cwd()+'/src/', ''),
+          path: root.replace(path.join(process.cwd(),'src/'), ''),
           name: path.basename(root).replace(/^\d./, ''),
           slug: path.basename(root)
       };

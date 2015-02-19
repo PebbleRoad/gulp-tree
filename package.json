@@ -28,12 +28,12 @@
     "through2": "~0.4.0",
     "js-yaml": "~3.0.1",
     "marked": "~0.3.1",
-    "path": "~0.4.9"    
+    "path": "~0.4.9",
+    "gulp-util": "~2.2.0"
   },
   "devDependencies": {
-    "gulp-util": "~2.2.0",
     "gulp": "~3.3.2",
-    "assert": "~1.1.0"    
+    "assert": "~1.1.0"
   },
   "engines": {
     "node": ">=0.8.0",
@@ -41,5 +41,5 @@
   },
   "licenses": "MIT",
   "readme": "# gulp-tree \n Create a tree JSON from directory. Used for tapestry app",
-  "readmeFilename": "README.md"  
+  "readmeFilename": "README.md"
 }

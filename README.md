@@ -18,7 +18,8 @@ var tree = require("gulp-tree");
 gulp.src('./src/*.html')
     .pipe(tree({
         patternsPath: './src/patterns',
-        jsonPath: './src/json/'
+        jsonPath: './src/json/',
+        appPath: './src/'
     }))
 ```
 

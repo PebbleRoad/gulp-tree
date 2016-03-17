@@ -1,14 +1,10 @@
-var fs, handle, path, tree, yaml, marked;
+var fs, handle, jsyaml, path, tree, yaml;
 
 fs = require('fs');
 jsyaml = require('js-yaml');
-marked = require('marked'); // markdown processor   
 path = require('path');
-var util = require('gulp-util');
 
 var through = require("through2");
-var es = require("event-stream");
-
 
 var generateTree = function(param){
 
@@ -16,12 +12,13 @@ var generateTree = function(param){
 
   var params = param || {},
       patternsPath = path.resolve(params.patternsPath || './src/patterns'),
-      jsonPath = path.resolve(params.jsonPath || './src/json/')
+      jsonPath = path.resolve(params.jsonPath || './src/json/'),
+      appPath = path.resolve(params.appPath || './src/')
 
   var stream = through.obj(function (file, enc, callback) {
 
       /* File passed in */
-      
+
       var parsedFile = tree(patternsPath)
 
 
@@ -33,7 +30,7 @@ var generateTree = function(param){
       /**
        * If patternsPath doesnt exist
        */
-      
+
       fs.stat(patternsPath, function(err, stats){
         if(err && erro.errno == 34){
           this.emit('error', new PluginError('gulp-tree', 'Patterns directory doesnt exist'));
@@ -44,7 +41,7 @@ var generateTree = function(param){
       /**
        * Write the file
        */
-      
+
       fs.stat(jsonPath, function(err, stats){
 
         if(err && err.errno == 34){
@@ -57,35 +54,31 @@ var generateTree = function(param){
       var files = [];
 
       for(var i = 0; i< s.length; i++){
-          
+
           if(s[i].children && s[i].children.length){
-              
+
               files.push(jsonPath+ '/' + s[i].slug + '.json')
 
               fs.writeFile(jsonPath + '/'+ s[i].slug+".json", JSON.stringify(s[i].children, null, 4), function(err){
                   if(err) {
                       console.log(err);
                   } else {
-                                          
+
                       console.log("Generated json in " + jsonPath);
                   }
-              })  
+              })
           }
-          
+
 
       }
 
       return files;
 
-      
-      
-      
-
   });
 
   var excludedExtension = ['.png', '.jpg', '.git', '.jpeg', '.gif', '.html'];
   var tree = function(root){
-      
+
       var info, ring;
       root = root.replace(/\/+$/, "");
       if (fs.existsSync(root)) {
@@ -94,18 +87,17 @@ var generateTree = function(param){
           return 'error: root does not exist';
       }
       info = {
-          path: root.replace(path.join(process.cwd(),'src/'), ''),
+          path: root.replace(path.join(appPath), ''),
           name: path.basename(root).replace(/^\d./, ''),
           slug: path.basename(root)
       };
 
-
       if (ring.isDirectory()) {
 
-          var children = fs.readdirSync(root)         
-          
+          var children = fs.readdirSync(root)
+
           var filtered = children.filter(function(c){
-              
+
               var filepath = root + '/' + c,
                   isFile = fs.lstatSync(filepath).isFile(),
                   content = true;
@@ -113,12 +105,12 @@ var generateTree = function(param){
               if(isFile && fs.readFileSync(filepath) == ""){
                 content = false
               }
-              
+
               return c != '.DS_Store' && excludedExtension.indexOf(path.extname(c)) == -1 && content
 
           })
 
-          delete(info.path)          
+          delete(info.path)
 
           info.children = filtered.map(function(child) {
               return tree(root + '/' + child);
@@ -129,15 +121,15 @@ var generateTree = function(param){
 
           var contents = fs.readFileSync(root, {encoding: 'utf8'});
           var extname = path.extname(root);
-          
+
           var re = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})?([\w\W]*)*/
                 , results = re.exec(contents.trim())
                 , conf = {}
-                , yamlOrJson;                
+                , yamlOrJson;
 
           if((yamlOrJson = results[2])) {
-            
-            if(yamlOrJson.charAt(0) === '{') { 
+
+            if(yamlOrJson.charAt(0) === '{') {
               conf = JSON.parse(yamlOrJson);
             } else {
               conf = jsyaml.load(yamlOrJson);
@@ -148,7 +140,7 @@ var generateTree = function(param){
 
               info.name = conf.name
           }else{
-              
+
               return true;
           }
 
@@ -156,37 +148,22 @@ var generateTree = function(param){
           /**
            * Add meta variables
            */
-          
+
           info.meta = {};
-          
+
           for(var key in conf){
               if(key != "name" && key != "description"){
               if(conf.hasOwnProperty(key)){
-                info.meta[key] = conf[key]  
-              }              
+                info.meta[key] = conf[key]
+              }
             }
           }
 
           if(Object.keys(info.meta).length < 1){
             delete(info.meta)
           }
-          
-          
-      } else if (ring.isSymbolicLink()) {
-          info.type = 'link';
-      } else {
-          info.type = 'unknown';
-      }
-      return info;
 
-  }
 
-  return stream;
-
-}
-
-module.exports = generateTree;    
-          
       } else if (ring.isSymbolicLink()) {
           info.type = 'link';
       } else {

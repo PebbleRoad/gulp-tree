@@ -45,14 +45,11 @@ var generateTree = function(param){
        * Write the file
        */
 
-      fs.stat(jsonPath, function(err, stats){
-
-        if(err && err.errno == 34){
-
-          fs.mkdir(jsonPath)
-
-        }
-      })
+      try {
+          fs.mkdirSync(jsonPath);
+      } catch(e) {
+          if ( e.code != 'EEXIST' ) throw e;
+      }
 
       var files = [];
 
